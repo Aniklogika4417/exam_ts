@@ -246,6 +246,8 @@ The following is the list of currently existing problems with the system. :
 
 23. **Any request to the server returns: "A token is required for authentication" even in case the token is supplied for the request.** *=> 5 points*
 
+
+
 24. **Addition of the new user cannot be performed. Returned error message: "Incorrect query".** *=> 5 points*
 
 25. **On an attempt to add a new board type an error: "not found" is returned.** *=> 8 points*
