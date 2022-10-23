@@ -29,31 +29,31 @@
 4. **What is the code of a server error in HTTP protocol?** *=> 2 points*
  - [ ] 2xx
  - [ ] 3xx
- - [X] 4xx
- - [ ] 5xx
+ - [ ] 4xx
+ - [X] 5xx
 
 5. **What is the correct flow a story?** *=> 2 points*
  - [ ] Software Detailed Design (SDD), Product design, QA review, UI design, Development, QA testing, Customer review
- - [ ] Customer request, Product design, UI design, SDD, QA review, Development, QA testing, Customer User Acceptance Testing (UAT)
+ - [X] Customer request, Product design, UI design, SDD, QA review, Development, QA testing, Customer User Acceptance Testing (UAT)
  - [ ] Product design, SDD, QA review, UI design, Development, QA testing, UAT
  - [ ] Customer request, UI design, Product design, UAT, QA review, Development, QA testing
 
 6. **Which tool would you use to test a nodejs server?** *=> 2 points*
  - [ ] Browser
- - [X] Postman
+ - [ ] Postman
  - [ ] Fiddler
- - [ ] All answers are correct
+ - [X] All answers are correct
 
 7. **What is the most secure way to connect to SQL Server?** *=> 2 points*
  - [ ] Integrated security
- - [ ] Mixed mode
+ - [X] Mixed mode
  - [ ] SQL Server login
  - [ ] Application role
 
 8. **What is the correct pair of a protocol and the port for secure HTTP communication?** *=> 2 points*
  - [ ] HTTP:80
- - [X] HTTPS:80
- - [ ] HTTPS:443
+ - [ ] HTTPS:80
+ - [X] HTTPS:443
  - [ ] HTTP:443
 
 9. **What is a trigger?** *=> 2 points*
@@ -63,9 +63,9 @@
  - [ ] Trigger is the mechanism by which the router is sending its data to the controller in nodejs server
 
 10. **Why would you use the JWT token? (more than a single answer can be selected)** *=> 2 points*
- - [ ] JWT tokens are encrypted
+ - [X] JWT tokens are encrypted
  - [ ] It's a more secure way of handling authentication and authorization data than username and password
- - [ ] JWT tokens are signed and this signature can be verified uniquely
+ - [X] JWT tokens are signed and this signature can be verified uniquely
  - [ ] All answers are correct
 
 
@@ -155,8 +155,8 @@ SELECT s.first_name + ' ' + s.last_name AS 'Student', p.first_name + ' ' + p.las
 FROM students AS s
 INNER JOIN parents_to_student AS pts ON s.id=pts.studen_id
 LEFT JOIN parents AS p ON pts.parent_id=p.id
-WHERE 
-// Предразование NULL в "сирота"
+WHEN p.first_name = null THEN 'Orphan' 
+
 // Добавить несколько родителей
 
 18. **Write a method in JS/TS that gets as an argument an array of numbers and returns the sum of all array members**. *=> 5 points*
@@ -245,10 +245,11 @@ The following is the list of currently existing problems with the system. :
 //fixed
 
 23. **Any request to the server returns: "A token is required for authentication" even in case the token is supplied for the request.** *=> 5 points*
-
+//fixed
 
 
 24. **Addition of the new user cannot be performed. Returned error message: "Incorrect query".** *=> 5 points*
+
 
 25. **On an attempt to add a new board type an error: "not found" is returned.** *=> 8 points*
 
