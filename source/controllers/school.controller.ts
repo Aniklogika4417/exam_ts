@@ -76,6 +76,7 @@ const addBoardType = async (req: Request, res: Response, next: NextFunction) => 
         id: NON_EXISTENT_ID,
         type: body.type
     }, (req as AuthenticatedRequest).userData.userId)
+    //(req as AuthenticatedRequest).userData.userId
         .then((result: whiteBoardType) => {
             return res.status(200).json(result);
         })

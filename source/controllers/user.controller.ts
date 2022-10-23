@@ -34,6 +34,7 @@ const add = async (req: Request, res: Response, next: NextFunction) => {
     const body: user = req.body;
 
     const hashedPassword: string = bcrypt.hashSync(body.password as string);
+    let userId: number = 1;
 
     userService.add({
         id: NON_EXISTENT_ID,

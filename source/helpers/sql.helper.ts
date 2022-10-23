@@ -117,23 +117,62 @@ export class SqlHelper {
         });
     }
 
-    public static createNew(errorService: ErrorService, query: string, original: entityWithId, ...params: (string | number)[]): Promise<entityWithId> {
+    // public static createNew(errorService: ErrorService, query: string, original: entityWithId, ...params: (string | number)[]): Promise<entityWithId> {
+    //     return new Promise<entityWithId>((resolve, reject) => {
+    //         SqlHelper.openConnection(errorService)
+    //             .then((connection: Connection) => {
+    //                 const queries: string[] = [query, Queries.SelectIdentity];
+    //                 const combinedQuery: string = queries.join(";");
+    //                 let executionCounter: number = 0;
+    //                 connection.query(combinedQuery, params, (queryError: Error | undefined, queryResult: entityWithId[] | undefined) => {
+    //                     if (queryError) {
+    //                         reject(errorService.getError(AppError.QueryError));
+    //                     }
+    //                     else {
+    //                         executionCounter++; // executionCounter = executionCounter + 1;
+
+    //                         if (executionCounter === queries.length) {
+    //                             SqlHelper.treatInsertResult(errorService, original, queryResult, resolve, reject);
+    //                         }
+    //                     }
+    //                 });
+    //             })
+    //             .catch((error: systemError) => {
+    //                 reject(error);
+    //             })
+    //     });
+    // }
+
+    public static createNew(errorService: ErrorService,query: string, original: entityWithId, ...params: (string | number)[]): Promise<entityWithId> {
         return new Promise<entityWithId>((resolve, reject) => {
             SqlHelper.openConnection(errorService)
                 .then((connection: Connection) => {
                     const queries: string[] = [query, Queries.SelectIdentity];
-                    const combinedQuery: string = queries.join(";");
+
+                    const executeQuery: string = queries.join(';');
+                    const badQuerryError: systemError = errorService.getError(AppError.QueryError);
                     let executionCounter: number = 0;
-                    connection.query(combinedQuery, params, (queryError: Error | undefined, queryResult: entityWithId[] | undefined) => {
+                    connection.query(executeQuery, params, (queryError: Error | undefined, queryResult: entityWithId[] | undefined) => {
                         if (queryError) {
-                            reject(errorService.getError(AppError.QueryError));
+                            reject(badQuerryError);
                         }
                         else {
-                            executionCounter++; // executionCounter = executionCounter + 1;
-
+                            executionCounter++;
                             if (executionCounter === queries.length) {
-                                SqlHelper.treatInsertResult(errorService, original, queryResult, resolve, reject);
+                                if (queryResult !== undefined) {
+                                    if (queryResult.length == 1) {
+                                        (original as any).id = (queryResult[0] as any).id;
+                                        resolve(original);
+                                    }
+                                    else {
+                                        reject(badQuerryError);
+                                    }
+                                }
+                                else {
+                                    reject(badQuerryError);
+                                };
                             }
+
                         }
                     });
                 })
@@ -142,6 +181,7 @@ export class SqlHelper {
                 })
         });
     }
+
 
     public static executeStoredProcedure(errorService: ErrorService, procedureName: string, original: entityWithId, ...params: (string | number)[]): Promise<entityWithId> {
         return new Promise<entityWithId>((resolve, reject) => {
