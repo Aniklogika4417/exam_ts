@@ -10,7 +10,7 @@ const errorService: ErrorService = new ErrorService();
 const schoolService: SchoolService = new SchoolService(errorService);
 
 const getBoardTypes = async (req: Request, res: Response, next: NextFunction) => {
-    console.log("User data: ", (req as AuthenticatedRequest).userData);
+    //console.log("User data: ", (req as AuthenticatedRequest).userData);
     schoolService.getBoardTypes()
         .then((result: whiteBoardType[]) => {
             return res.status(200).json({
